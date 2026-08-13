@@ -373,7 +373,7 @@ This project demonstrates practical experience in:
 
 **Chidiebere David Ogbonna**
 
-Data Analyst | SQL | Power BI | Python | Excel
+Data Analyst | SQL | Power BI | Tableau | Python | Excel
 
 ## Contact
 
