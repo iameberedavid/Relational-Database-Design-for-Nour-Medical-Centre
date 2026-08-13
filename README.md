@@ -451,8 +451,6 @@ The resulting MySQL database provides a scalable foundation that can be extended
 
 Data Analyst | SQL | Power BI | Tableau | Python | Excel
 
-This project is part of my data analytics and database portfolio, demonstrating practical application of relational database design and SQL to a real-world business scenario.
-
 ## Contact
 
 Feel free to send your reviews, suggestions, questions and collaboration requests to chidieberedavid326@gmail.com
@@ -468,3 +466,7 @@ Feel free to send your reviews, suggestions, questions and collaboration request
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
+
+## ⚠️ Disclaimer
+
+Nour Medical Centre is a fictional medical facility created solely for educational and portfolio purposes.
