@@ -1,10 +1,10 @@
 # Relational Database Design for Nour Medical Centre
 
-![Data Analysis](https://img.shields.io/badge/Microsoft%20Excel-blue)
+![Data Analysis](https://img.shields.io/badge/Data%20Analysis-blue)
 ![Healthcare Analysis](https://img.shields.io/badge/Healthcare%20Analysis-brightgreen)
 ![Database Design](https://img.shields.io/badge/Database%20Design-blue)
 ![Medical Centre](https://img.shields.io/badge/Medical%20Centre-brightgreen)
-![SQL](https://img.shields.io/badge/Data%20Analysis-blue)
+![SQL](https://img.shields.io/badge/SQL-blue)
 ![MIT](https://img.shields.io/badge/MIT%20License-brightgreen)
 
 ## 📌 Project Overview
