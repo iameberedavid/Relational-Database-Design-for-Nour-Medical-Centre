@@ -293,8 +293,7 @@ The evaluation identified several opportunities for future refinement, particula
 
 These refinements are documented separately to distinguish between requirements necessary for the current solution and enhancements appropriate for a more mature production environment.
 
-📄 **Detailed documentation:**
-`documentation/database-design-and-refinement.md`
+📄 **[View the Database Design & Refinement Documentation](documentation/database-design-and-refinement.md)**
 
 ---
 
@@ -310,7 +309,7 @@ Potential future improvements include:
 * Adding insurance information.
 * Introducing staff and department management.
 
-These enhancements are discussed in detail in the **Database Design & Refinement Document**.
+These enhancements are discussed in detail in the 📄 **[Database Design & Refinement Documentation](documentation/database-design-and-refinement.md)**.
 
 ---
 
