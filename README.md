@@ -309,7 +309,7 @@ Potential future improvements include:
 * Adding insurance information.
 * Introducing staff and department management.
 
-These enhancements are discussed in detail in the 📄 **[Database Design & Refinement Documentation](documentation/database-design-and-refinement.md)**.
+These enhancements are discussed in detail in the **[Database Design & Refinement Documentation](documentation/database-design-and-refinement.md)**.
 
 ---
 
