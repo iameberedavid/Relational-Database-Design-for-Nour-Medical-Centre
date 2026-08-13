@@ -7,8 +7,6 @@
 ![SQL](https://img.shields.io/badge/SQL-blue)
 ![MIT](https://img.shields.io/badge/MIT%20License-brightgreen)
 
-# Relational Database Design for Nour Medical Centre
-
 ## 📌 Project Overview
 
 Nour Medical Centre is a small medical facility that requires a structured database to manage its day-to-day clinical operations.
