@@ -7,11 +7,13 @@
 ![SQL](https://img.shields.io/badge/SQL-blue)
 ![MIT](https://img.shields.io/badge/MIT%20License-brightgreen)
 
+# Relational Database Design for Nour Medical Centre
+
 ## 📌 Project Overview
 
 Nour Medical Centre is a small medical facility that requires a structured database to manage its day-to-day clinical operations.
 
-This project involves the **design and implementation of a relational database schema using MySQL** to manage patients, doctors, appointments, diagnoses, and prescribed medications.
+This project involves the **design and implementation of a relational database using MySQL** to manage patients, doctors, appointments, diagnoses, medications, and prescriptions.
 
 The database was developed using a **requirements-driven approach**, applying core relational database principles including entity-relationship modeling, normalization, primary and foreign keys, referential integrity, data consistency, and transaction reliability.
 
@@ -25,38 +27,39 @@ The project follows a complete database design process:
 
 The objectives of this project are to:
 
-* Translate business requirements into a structured relational database model.
-* Identify the entities, attributes, and relationships required by the medical centre.
-* Design a normalized schema that minimizes unnecessary data redundancy.
-* Establish appropriate primary and foreign key relationships.
-* Implement the database using MySQL.
-* Apply constraints to maintain data integrity and consistency.
-* Evaluate the schema against core relational database principles.
-* Identify potential limitations and propose future refinements.
-* Demonstrate practical application of SQL and relational database design.
+- Translate business requirements into a structured relational database model.
+- Identify the entities, attributes, and relationships required by the medical centre.
+- Design a normalized schema that minimizes unnecessary data redundancy.
+- Establish appropriate primary and foreign key relationships.
+- Implement the database using MySQL.
+- Apply constraints to maintain data integrity and consistency.
+- Evaluate the schema against core relational database principles.
+- Identify design limitations and refine the schema where appropriate.
+- Demonstrate practical application of SQL and relational database design.
+- Design a database structure that can support future operational and analytical requirements.
 
 ---
 
 ## 🏥 Business Requirements
 
-The database is based on the following requirements:
+The database is based on the following requirements.
 
 ### Patients
 
 Each patient has:
 
-* A unique patient ID
-* Full name
-* Date of birth
-* Contact number
+- A unique patient ID
+- Full name
+- Date of birth
+- Contact number
 
 ### Doctors
 
 Each doctor has:
 
-* A unique doctor ID
-* Name
-* Specialisation
+- A unique doctor ID
+- Name
+- Specialisation
 
 ### Appointments
 
@@ -64,67 +67,92 @@ Patients can book appointments with specific doctors.
 
 Each appointment records:
 
-* Patient
-* Doctor
-* Date and time
-* Reason for visit
+- Patient
+- Doctor
+- Date and time
+- Reason for visit
 
 ### Medical Records
 
 After an appointment, the doctor records:
 
-* Diagnosis
-* Prescribed medication
+- Diagnosis
+- Any prescribed medication
 
-### Relationships
-
-* A patient can have many appointments.
-* A doctor can see many patients.
-* Each appointment belongs to one patient and one doctor.
-* Each appointment can have one corresponding medical record.
+A patient can have many appointments, while a doctor can see many patients.
 
 ---
 
-## 🧩 Database Entities
+# 🧩 Database Entities
 
-The requirements were translated into four core entities:
+The business requirements were translated into six core entities:
 
-| Entity              | Purpose                                                                  |
-| ------------------- | ------------------------------------------------------------------------ |
-| **Patients**        | Stores patient demographic and contact information.                      |
-| **Doctors**         | Stores information about doctors and their specialisations.              |
-| **Appointments**    | Records appointments between patients and doctors.                       |
-| **Medical Records** | Stores diagnoses and prescribed medication associated with appointments. |
+| Entity | Purpose |
+|---|---|
+| **Patients** | Stores patient demographic and contact information. |
+| **Doctors** | Stores information about doctors and their specialisations. |
+| **Appointments** | Records appointments between patients and doctors. |
+| **Medical Records** | Stores diagnoses associated with appointments. |
+| **Medications** | Maintains a structured list of medications. |
+| **Prescriptions** | Links medications to appointments and stores prescription details. |
 
 ---
 
-## 🔗 Entity Relationships
+# 🔗 Entity Relationships
 
 The database uses the following relationships:
 
-```text
-Patients 1 ───────────< Appointments >─────────── 1 Doctors
-                              │
-                              │ 1
-                              │
-                              │ 1
-                              ▼
-                       Medical Records
 ```
+                         ┌──────────────────┐
+                         │     PATIENTS     │
+                         └────────┬─────────┘
+                                  │
+                                 1:M
+                                  │
+                         ┌────────▼─────────┐
+                         │   APPOINTMENTS   │
+                         └───┬──────────┬───┘
+                             │          │
+                            1:1        1:M
+                             │          │
+              ┌──────────────▼──┐   ┌───▼─────────────┐
+              │ MEDICAL RECORDS │   │  PRESCRIPTIONS  │
+              └─────────────────┘   └───────┬─────────┘
+                                             │
+                                            M:1
+                                             │
+                                    ┌────────▼────────┐
+                                    │   MEDICATIONS   │
+                                    └─────────────────┘
 
+                         ┌──────────────────┐
+                         │      DOCTORS     │
+                         └────────┬─────────┘
+                                  │
+                                 1:M
+                                  │
+                           APPOINTMENTS
+
+````
 ### Cardinality
 
 * **Patients → Appointments:** One-to-Many (1:M)
 * **Doctors → Appointments:** One-to-Many (1:M)
 * **Appointments → Medical Records:** One-to-One (1:1)
+* **Appointments → Prescriptions:** One-to-Many (1:M)
+* **Medications → Prescriptions:** One-to-Many (1:M)
 
 The `Appointments` table resolves the many-to-many relationship between patients and doctors.
 
+The `Prescriptions` table resolves the many-to-many relationship between appointments and medications.
+
 ---
 
-## 🗃️ Relational Schema
+# 🗃️ Relational Schema
 
-### Patients
+## 1. Patients
+
+Stores demographic and contact information for patients registered at the medical centre.
 
 | Field            | Data Type    | Key / Constraint   |
 | ---------------- | ------------ | ------------------ |
@@ -133,7 +161,13 @@ The `Appointments` table resolves the many-to-many relationship between patients
 | `date_of_birth`  | DATE         | NOT NULL           |
 | `contact_number` | VARCHAR(20)  | NOT NULL           |
 
-### Doctors
+**Primary Key:** `patient_id`
+
+---
+
+## 2. Doctors
+
+Stores information about doctors employed by the medical centre.
 
 | Field            | Data Type    | Key / Constraint   |
 | ---------------- | ------------ | ------------------ |
@@ -141,7 +175,13 @@ The `Appointments` table resolves the many-to-many relationship between patients
 | `doctor_name`    | VARCHAR(100) | NOT NULL           |
 | `specialisation` | VARCHAR(100) | NOT NULL           |
 
-### Appointments
+**Primary Key:** `doctor_id`
+
+---
+
+## 3. Appointments
+
+Records appointments between patients and doctors.
 
 | Field                  | Data Type    | Key / Constraint   |
 | ---------------------- | ------------ | ------------------ |
@@ -151,27 +191,94 @@ The `Appointments` table resolves the many-to-many relationship between patients
 | `appointment_datetime` | DATETIME     | NOT NULL           |
 | `reason`               | VARCHAR(255) | NOT NULL           |
 
-### Medical Records
+**Primary Key:** `appointment_id`
 
-| Field                   | Data Type | Key / Constraint     |
-| ----------------------- | --------- | -------------------- |
-| `medical_record_id`     | INT       | PK, AUTO_INCREMENT   |
-| `appointment_id`        | INT       | FK, UNIQUE, NOT NULL |
-| `diagnosis`             | TEXT      | NOT NULL             |
-| `prescribed_medication` | TEXT      | NOT NULL             |
+**Foreign Keys:**
+
+```text
+patient_id → patients.patient_id
+doctor_id  → doctors.doctor_id
+```
 
 ---
 
-## 🔑 Keys and Relationships
+## 4. Medical Records
 
-The database uses primary and foreign keys to establish entity relationships and maintain referential integrity.
+Stores the diagnosis resulting from an appointment.
+
+| Field               | Data Type | Key / Constraint     |
+| ------------------- | --------- | -------------------- |
+| `medical_record_id` | INT       | PK, AUTO_INCREMENT   |
+| `appointment_id`    | INT       | FK, UNIQUE, NOT NULL |
+| `diagnosis`         | TEXT      | NOT NULL             |
+
+**Primary Key:** `medical_record_id`
+
+**Foreign Key:**
+
+```text
+appointment_id → appointments.appointment_id
+```
+
+The `UNIQUE` constraint on `appointment_id` ensures that an appointment can have only one medical record in the current design.
+
+---
+
+## 5. Medications
+
+Stores a structured list of medications that can be prescribed.
+
+| Field             | Data Type    | Key / Constraint   |
+| ----------------- | ------------ | ------------------ |
+| `medication_id`   | INT          | PK, AUTO_INCREMENT |
+| `medication_name` | VARCHAR(100) | NOT NULL, UNIQUE   |
+
+**Primary Key:** `medication_id`
+
+The `UNIQUE` constraint prevents duplicate medication names from being unnecessarily stored.
+
+---
+
+## 6. Prescriptions
+
+Links medications to appointments and stores medication-specific prescription information.
+
+| Field             | Data Type    | Key / Constraint   |
+| ----------------- | ------------ | ------------------ |
+| `prescription_id` | INT          | PK, AUTO_INCREMENT |
+| `appointment_id`  | INT          | FK, NOT NULL       |
+| `medication_id`   | INT          | FK, NOT NULL       |
+| `dosage`          | VARCHAR(100) | NOT NULL           |
+| `frequency`       | VARCHAR(100) | NOT NULL           |
+| `duration`        | VARCHAR(100) | NOT NULL           |
+
+**Primary Key:** `prescription_id`
+
+**Foreign Keys:**
+
+```text
+appointment_id → appointments.appointment_id
+medication_id  → medications.medication_id
+```
+
+This structure allows a single appointment to have multiple prescribed medications.
+
+---
+
+# 🔑 Keys and Relationships
+
+The database uses primary and foreign keys to establish relationships and maintain referential integrity.
 
 ### Primary Keys
 
-* `patients.patient_id`
-* `doctors.doctor_id`
-* `appointments.appointment_id`
-* `medical_records.medical_record_id`
+```text
+patients.patient_id
+doctors.doctor_id
+appointments.appointment_id
+medical_records.medical_record_id
+medications.medication_id
+prescriptions.prescription_id
+```
 
 ### Foreign Keys
 
@@ -179,76 +286,204 @@ The database uses primary and foreign keys to establish entity relationships and
 appointments.patient_id
         ↓
 patients.patient_id
+```
 
+```text
 appointments.doctor_id
         ↓
 doctors.doctor_id
+```
 
+```text
 medical_records.appointment_id
         ↓
 appointments.appointment_id
 ```
 
+```text
+prescriptions.appointment_id
+        ↓
+appointments.appointment_id
+```
+
+```text
+prescriptions.medication_id
+        ↓
+medications.medication_id
+```
+
 ---
 
-## 🧱 Normalization
+# 🧠 Key Design Decision: Structured Prescription Management
 
-The schema was evaluated against the first three normal forms.
+The initial design stored prescribed medication as a text field within the medical record.
 
-### First Normal Form (1NF)
-
-The design uses atomic attributes and avoids repeating groups.
-
-### Second Normal Form (2NF)
-
-Non-key attributes are dependent on the primary key of their respective entities.
-
-### Third Normal Form (3NF)
-
-Non-key attributes depend on the primary key and not on other non-key attributes.
+This was identified as a potential limitation because a patient may receive multiple medications from a single appointment.
 
 For example:
 
-* Patient contact information belongs to `Patients`.
-* Doctor specialisation belongs to `Doctors`.
-* Appointment details belong to `Appointments`.
-* Diagnosis and prescribed medication belong to `Medical Records`.
+```text
+Paracetamol 500mg twice daily for 5 days
+Amoxicillin 500mg three times daily for 7 days
+```
 
-This separation reduces unnecessary duplication and improves data consistency.
+Storing this information as one text value would make it difficult to:
+
+* Query individual medications.
+* Track medication usage.
+* Store medication-specific dosage and frequency.
+* Analyze prescribing patterns.
+* Maintain consistent medication names.
+* Scale the database for future prescription requirements.
+
+### Refinement
+
+The initial `prescribed_medication` attribute was therefore replaced with two related entities:
+
+```text
+MEDICATIONS
+    │
+    │ 1:M
+    ▼
+PRESCRIPTIONS
+    │
+    │ M:1
+    ▼
+APPOINTMENTS
+```
+
+This allows:
+
+* Multiple medications per appointment.
+* Structured medication names.
+* Medication-specific dosage.
+* Medication-specific frequency.
+* Treatment duration.
+* Improved querying and reporting.
+* Reduced data redundancy.
+
+This refinement was implemented because it provides a more scalable and relational representation of prescription data while still satisfying the original business requirement.
 
 ---
 
-## 🛡️ Data Integrity
+# 🧱 Normalization
 
-The schema uses:
+The schema was evaluated against the first three normal forms.
 
-* Primary keys for row-level uniqueness.
-* Foreign keys for referential integrity.
-* `NOT NULL` constraints for required attributes.
-* `UNIQUE` constraint on `medical_records.appointment_id` to maintain the one-to-one appointment-to-medical-record relationship.
+## First Normal Form (1NF)
 
-The MySQL **InnoDB** storage engine is used to support transactional integrity and ACID properties.
+The design uses atomic attributes and avoids repeating groups.
 
----
-
-## 💾 Persistence and ACID
-
-The database stores data persistently in MySQL rather than in temporary or in-memory structures.
-
-Using InnoDB allows database transactions to support the **ACID principles**:
-
-* **Atomicity** — transactions are completed fully or rolled back.
-* **Consistency** — constraints help prevent invalid data states.
-* **Isolation** — concurrent transactions are managed according to the database isolation level.
-* **Durability** — committed transactions are persisted by the database engine.
-
-This ensures that operations such as creating an appointment and recording its clinical outcome can be handled reliably within a transaction.
+For example, medications are no longer stored as a comma-separated or free-text list. Instead, each medication associated with an appointment is represented as a separate prescription record.
 
 ---
 
-## 🔄 CRUD Operations
+## Second Normal Form (2NF)
 
-All four core tables support standard CRUD operations:
+Non-key attributes are dependent on the primary key of their respective entity.
+
+For example:
+
+* Patient details depend on `patient_id`.
+* Doctor details depend on `doctor_id`.
+* Appointment details depend on `appointment_id`.
+* Medication details depend on `medication_id`.
+* Prescription details depend on `prescription_id`.
+
+---
+
+## Third Normal Form (3NF)
+
+Non-key attributes depend on the primary key and not on other non-key attributes.
+
+For example, a doctor's specialisation is stored in the `Doctors` table rather than repeatedly storing it in every appointment involving that doctor.
+
+Similarly, the medication name is stored in `Medications` rather than repeatedly storing the same medication name in `Prescriptions`.
+
+This separation reduces unnecessary redundancy and improves consistency.
+
+---
+
+# 🛡️ Data Integrity
+
+The schema uses several constraints to maintain data quality and integrity.
+
+### Primary Keys
+
+Ensure that every row has a unique identifier.
+
+### Foreign Keys
+
+Ensure that relationships between entities reference valid records.
+
+### NOT NULL Constraints
+
+Ensure that required fields cannot be left empty.
+
+### UNIQUE Constraints
+
+Prevent duplicate values where uniqueness is required.
+
+Examples include:
+
+```text
+medications.medication_name
+medical_records.appointment_id
+```
+
+These constraints help prevent invalid or inconsistent data from entering the database.
+
+---
+
+# 💾 Persistence and ACID
+
+The database is implemented using **MySQL** with the **InnoDB** storage engine.
+
+Data is stored persistently rather than in temporary or volatile in-memory structures.
+
+InnoDB provides transactional support based on the ACID principles:
+
+### Atomicity
+
+A transaction is treated as a single unit. Operations can either all succeed or be rolled back.
+
+### Consistency
+
+Database constraints help ensure that transactions do not leave the database in an invalid state.
+
+### Isolation
+
+Concurrent transactions are managed according to the configured MySQL transaction isolation level.
+
+### Durability
+
+Once a transaction is committed, the database engine persists the changes.
+
+For example, creating an appointment and recording its related clinical information can be handled within a transaction.
+
+```sql
+START TRANSACTION;
+
+-- Create appointment
+-- Record medical information
+-- Create prescription records
+
+COMMIT;
+```
+
+If an error occurs:
+
+```sql
+ROLLBACK;
+```
+
+This prevents a partially completed transaction from being committed.
+
+---
+
+# 🔄 CRUD Operations
+
+All six core tables support standard CRUD operations.
 
 | Table           | Create | Read | Update | Delete |
 | --------------- | :----: | :--: | :----: | :----: |
@@ -256,29 +491,77 @@ All four core tables support standard CRUD operations:
 | Doctors         |    ✓   |   ✓  |    ✓   |    ✓   |
 | Appointments    |    ✓   |   ✓  |    ✓   |    ✓   |
 | Medical Records |    ✓   |   ✓  |    ✓   |    ✓   |
+| Medications     |    ✓   |   ✓  |    ✓   |    ✓   |
+| Prescriptions   |    ✓   |   ✓  |    ✓   |    ✓   |
+
+Examples include:
+
+* Registering a new patient.
+* Adding a doctor.
+* Booking an appointment.
+* Updating patient information.
+* Recording a diagnosis.
+* Adding a medication.
+* Creating a prescription.
+* Retrieving a patient's medical history.
+
+In a production healthcare environment, deletion of clinical records would require appropriate retention and governance policies rather than unrestricted hard deletion.
 
 ---
 
-## 📊 Business Queries
+# 📊 Business Queries
 
-The database can support operational questions such as:
+The database can support operational and analytical questions such as:
 
-* Which patients are scheduled to see each doctor?
+### Patient Management
+
+* What appointments does a particular patient have?
+* How many appointments has each patient attended?
 * What is a patient's appointment history?
-* Which appointments have recorded diagnoses?
-* Which medications have been prescribed?
-* How many appointments has each doctor handled?
-* What are the most common reasons for patient visits?
 
-SQL queries demonstrating these use cases are included in the `database/04_business_queries.sql` file.
+### Doctor Management
+
+* How many appointments has each doctor handled?
+* Which patients has a particular doctor seen?
+* How many appointments are associated with each specialisation?
+
+### Appointment Management
+
+* What appointments are scheduled for a particular date?
+* Which doctor is assigned to each appointment?
+* Which patients have appointments with a specific doctor?
+
+### Clinical Information
+
+* What diagnoses have been recorded?
+* Which medications have been prescribed?
+* Which medications are prescribed most frequently?
+* Which doctors prescribe particular medications?
+
+### Prescription Analysis
+
+The normalized prescription structure makes it possible to perform analytical queries such as:
+
+```text
+Which medications are prescribed most frequently?
+```
+
+or:
+
+```text
+How many prescriptions were issued by each doctor?
+```
+
+These types of queries demonstrate how a well-structured relational database can support both operational processes and analytical reporting.
 
 ---
 
-## 🔍 Design Evaluation & Refinement
+# 🔍 Design Evaluation & Refinement
 
 After the initial schema was developed, it was evaluated against:
 
 * Relational database principles
+* Entity-relationship modeling
 * Normalization
 * Primary and foreign key integrity
 * Data redundancy
@@ -289,31 +572,118 @@ After the initial schema was developed, it was evaluated against:
 * Scalability
 * Future operational requirements
 
-The evaluation identified several opportunities for future refinement, particularly around **prescription management, appointment status tracking, and auditability**.
+The evaluation identified an issue with storing prescribed medication as a single text attribute.
 
-These refinements are documented separately to distinguish between requirements necessary for the current solution and enhancements appropriate for a more mature production environment.
+Rather than retaining a potentially difficult-to-query text field, the design was refined by introducing the `Medications` and `Prescriptions` entities.
 
-📄 **[View the Database Design & Refinement Documentation](documentation/database-design-and-refinement.md)**
+This refinement improved the normalization, scalability, and analytical capability of the database while preserving all relationships required by the original business scenario.
 
----
-
-## 🚀 Future Enhancements
-
-Potential future improvements include:
-
-* Separating medications and prescriptions into dedicated entities.
-* Adding appointment status tracking.
-* Adding record creation and modification timestamps.
-* Introducing payment and billing management.
-* Adding laboratory test management.
-* Adding insurance information.
-* Introducing staff and department management.
-
-These enhancements are discussed in detail in the **[Database Design & Refinement Documentation](documentation/database-design-and-refinement.md)**.
+📄 **Detailed documentation:**
+[Database Design & Refinement](documentation/database-design-and-refinement.md)
 
 ---
 
-## 🛠️ Technology
+# 🚀 Future Enhancements
+
+Although the current schema satisfies the stated requirements, several enhancements could be considered if Nour Medical Centre expands its operations.
+
+## 1. Appointment Status
+
+Add an `appointment_status` field to distinguish between:
+
+* Scheduled
+* Completed
+* Cancelled
+* No-show
+
+This would improve appointment tracking and operational reporting.
+
+---
+
+## 2. Audit Timestamps
+
+Add:
+
+```text
+created_at
+updated_at
+```
+
+These fields would improve:
+
+* Data traceability
+* Auditing
+* Change tracking
+* Data governance
+
+---
+
+## 3. Payment Management
+
+A dedicated `Payments` entity could be introduced to support:
+
+* Billing
+* Payment tracking
+* Outstanding balances
+* Revenue reporting
+* Payment method analysis
+
+---
+
+## 4. Laboratory Management
+
+A future laboratory module could introduce entities for:
+
+* Laboratory tests
+* Test orders
+* Results
+* Test status
+* Test history
+
+This would allow the database to support broader clinical workflows.
+
+---
+
+## 5. Staff and Department Management
+
+As the medical centre grows, additional entities could be introduced to manage:
+
+* Nurses
+* Administrative staff
+* Departments
+* Roles
+* Staff assignments
+
+These enhancements are outside the scope of the current requirements and would only be implemented if supported by future business needs.
+
+---
+
+# 🧭 Design Philosophy
+
+The database was developed using a **requirements-driven approach**.
+
+Rather than introducing unnecessary entities or attributes, the initial schema was designed to satisfy the stated business requirements while maintaining core relational database principles.
+
+The schema was then evaluated for:
+
+* Data redundancy
+* Normalization
+* Referential integrity
+* Scalability
+* Queryability
+* Transaction reliability
+
+Where a limitation was identified, the design was refined based on the underlying business requirement.
+
+The prescription model is an example of this approach: instead of storing multiple medications as unstructured text, the information was normalized into `Medications` and `Prescriptions`.
+
+This approach balances:
+
+> **Simplicity + Data Integrity + Scalability + Analytical Usability**
+
+---
+
+# 🛠️ Technology
 
 * **Database:** MySQL
 * **Language:** SQL
@@ -323,7 +693,7 @@ These enhancements are discussed in detail in the **[Database Design & Refinemen
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
 ```text
 Relational-Database-Design-for-Nour-Medical-Centre/
@@ -346,13 +716,14 @@ Relational-Database-Design-for-Nour-Medical-Centre/
 
 ---
 
-## 💡 Key Learning Outcomes
+# 💡 Key Learning Outcomes
 
 This project demonstrates practical experience in:
 
 * Requirements analysis
 * Relational database design
-* Entity and relationship identification
+* Entity identification
+* Relationship and cardinality analysis
 * Entity-Relationship Modeling
 * Database normalization
 * Primary and foreign key implementation
@@ -361,8 +732,11 @@ This project demonstrates practical experience in:
 * CRUD operations
 * Multi-table queries and JOINs
 * Transaction management
+* Data integrity
 * Database evaluation and refinement
-* Designing for future scalability
+* Structured prescription modeling
+* Designing for scalability
+* Translating business requirements into technical solutions
 
 ---
 
