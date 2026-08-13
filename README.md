@@ -309,7 +309,8 @@ prescriptions.medication_id
         ↓
 medications.medication_id
 ```
-
+![Tables](screenshots/tables.png)
+![Relationship between tables](screenshots/table-relationships.png)
 ---
 
 # 🧠 Key Design Decision: Structured Prescription Management
