@@ -436,7 +436,8 @@ prescription_id
 appointment_id → appointments.appointment_id
 medication_id  → medications.medication_id
 ```
-
+Below is a table count validation for the created tables
+![Table Count Validation](screenshots/table-count-validation.png)
 ---
 
 # 10. Final Entity Relationship Model
@@ -784,7 +785,15 @@ Examples:
 medications.medication_name
 medical_records.appointment_id
 ```
+---
 
+## Data Integrity Validation
+Following data population, referential-integrity checks were performed across all foreign-key relationships. All five validation checks returned zero invalid records, confirming that every appointment references a valid patient and doctor, every medical record references a valid appointment, and every prescription references both a valid appointment and medication.
+
+![Data Integrity Validation](screenshots/table-relationship-validation.png)
+
+Below is the query used for this validation
+![SQL Table for Relationship Validation](screenshots/SQL-queries-for-table-relationship-validation.png)
 ---
 
 # 15. Persistence
