@@ -436,7 +436,7 @@ prescription_id
 appointment_id → appointments.appointment_id
 medication_id  → medications.medication_id
 ```
-Below is a table count validation for the created tables
+Below is a table count validation for the tables created
 ![Table Count Validation](screenshots/table-count-validation.png)
 ---
 
