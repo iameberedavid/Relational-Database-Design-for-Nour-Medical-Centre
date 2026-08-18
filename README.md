@@ -17,7 +17,7 @@ The database was developed using a **requirements-driven approach**, applying co
 
 The project follows a complete database design process:
 
-> **Business Requirements → Entity Identification → Relational Schema → Normalization → Implementation → Evaluation → Refinement**
+> **Business Requirements → Entity Identification → Relational Schema → Normalization → Implementation → Analysis → Refinement**
 
 ---
 
