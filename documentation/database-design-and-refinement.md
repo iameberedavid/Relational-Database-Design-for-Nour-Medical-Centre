@@ -1066,6 +1066,7 @@ The final schema supports operational and analytical questions such as:
 - Which patients have the highest number of recorded visits?
 - What does the distribution of patient visit frequency look like?
 
+![Business Query](../screenshots/business-query.png)
 ---
 
 # 22. Future Refinements
