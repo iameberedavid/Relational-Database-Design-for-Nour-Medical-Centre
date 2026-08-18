@@ -510,48 +510,36 @@ In a production healthcare environment, deletion of clinical records would requi
 
 # 📊 Business Queries
 
-The database can support operational and analytical questions such as:
+## Business Questions & Analytical Objectives
+
+Beyond storing and managing clinic records, the database is designed to support operational analysis and answer practical business questions. The SQL analysis explores the following areas:
 
 ### Patient Management
+- How many patients are registered with the medical centre?
+- What is the age distribution of the patient population?
+- How frequently do patients return for appointments?
 
-* What appointments does a particular patient have?
-* How many appointments has each patient attended?
-* What is a patient's appointment history?
+### Appointment & Operational Analysis
+- How many appointments have been recorded?
+- How does appointment demand vary by month?
+- Which days of the week experience the highest appointment volume?
+- What times of day are busiest?
 
-### Doctor Management
+### Doctor & Specialisation Analysis
+- How many appointments does each doctor handle?
+- How is workload distributed across doctors?
+- Which medical specialisations experience the highest demand?
+- How many doctors are available within each specialisation?
 
-* How many appointments has each doctor handled?
-* Which patients has a particular doctor seen?
-* How many appointments are associated with each specialisation?
+### Clinical Analysis
+- What are the most frequently recorded diagnoses?
+- Which medications are prescribed most frequently?
+- How many prescriptions are typically associated with an appointment?
 
-### Appointment Management
-
-* What appointments are scheduled for a particular date?
-* Which doctor is assigned to each appointment?
-* Which patients have appointments with a specific doctor?
-
-### Clinical Information
-
-* What diagnoses have been recorded?
-* Which medications have been prescribed?
-* Which medications are prescribed most frequently?
-* Which doctors prescribe particular medications?
-
-### Prescription Analysis
-
-The normalized prescription structure makes it possible to perform analytical queries such as:
-
-```text
-Which medications are prescribed most frequently?
-```
-
-or:
-
-```text
-How many prescriptions were issued by each doctor?
-```
-
-These types of queries demonstrate how a well-structured relational database can support both operational processes and analytical reporting.
+### Patient Engagement
+- How many patients have multiple appointments?
+- Which patients have the highest number of recorded visits?
+- What does the distribution of patient visit frequency look like?
 
 ---
 
