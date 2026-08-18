@@ -541,6 +541,7 @@ Beyond storing and managing clinic records, the database is designed to support 
 - Which patients have the highest number of recorded visits?
 - What does the distribution of patient visit frequency look like?
 
+![Business Query](screenshots/business-query.png)
 ---
 
 # 🔍 Design Evaluation & Refinement
