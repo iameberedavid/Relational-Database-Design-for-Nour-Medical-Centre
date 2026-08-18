@@ -898,44 +898,7 @@ Records can technically be deleted through SQL, although clinical records in a r
 
 ---
 
-# 18. Business and Analytical Use Cases
-
-The final schema supports operational and analytical questions such as:
-
-### Patient Analysis
-
-* How many appointments has each patient had?
-* What is a patient's appointment history?
-* Which doctors has a patient visited?
-
-### Doctor Analysis
-
-* How many appointments has each doctor handled?
-* Which patients has a doctor seen?
-* How are appointments distributed across specialisations?
-
-### Appointment Analysis
-
-* How many appointments occurred within a given period?
-* Which doctor is assigned to each appointment?
-* Which patients have upcoming appointments?
-
-### Diagnosis Analysis
-
-* What diagnoses have been recorded?
-* How frequently does each diagnosis occur?
-
-### Medication Analysis
-
-* Which medications are prescribed most frequently?
-* Which doctors prescribe specific medications?
-* How many prescriptions were issued during a given period?
-
-The normalized prescription structure makes these analytical queries significantly easier than a free-text medication field would.
-
----
-
-# 19. Implemented Refinement: Prescription Management
+# 18. Implemented Refinement: Prescription Management
 
 ## Problem
 
@@ -1012,7 +975,7 @@ The refined design provides:
 
 ---
 
-# 20. Validation Against Original Requirements
+# 19. Validation Against Original Requirements
 
 The revised schema was checked against the original business scenario.
 
@@ -1039,7 +1002,7 @@ The refinement therefore changes the internal representation of medication data 
 
 ---
 
-# 21. Design Decision: Requirements-Driven Scope
+# 20. Design Decision: Requirements-Driven Scope
 
 An important principle applied throughout the project was **requirements-driven database design**.
 
@@ -1069,6 +1032,39 @@ Prescriptions
 ```
 
 Future requirements can drive subsequent schema evolution.
+
+---
+
+# 21. Business and Analytical Use Cases
+
+The final schema supports operational and analytical questions such as:
+
+### Patient Analysis
+- How many patients are registered with the medical centre?
+- What is the age distribution of the patient population?
+- How frequently do patients return for appointments?
+
+### Appointment & Operational Analysis
+- How many appointments have been recorded?
+- How does appointment demand vary by month?
+- Which days of the week experience the highest appointment volume?
+- What times of day are busiest?
+
+### Doctor & Specialisation Analysis
+- How many appointments does each doctor handle?
+- How is workload distributed across doctors?
+- Which medical specialisations experience the highest demand?
+- How many doctors are available within each specialisation?
+
+### Clinical Analysis
+- What are the most frequently recorded diagnoses?
+- Which medications are prescribed most frequently?
+- How many prescriptions are typically associated with an appointment?
+
+### Patient Engagement
+- How many patients have multiple appointments?
+- Which patients have the highest number of recorded visits?
+- What does the distribution of patient visit frequency look like?
 
 ---
 
