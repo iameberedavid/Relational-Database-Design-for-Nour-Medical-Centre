@@ -514,7 +514,7 @@ In a production healthcare environment, deletion of clinical records would requi
 
 Beyond storing and managing clinic records, the database is designed to support operational analysis and answer practical business questions. The SQL analysis explores the following areas:
 
-### Patient Management
+### Patient Analysis
 - How many patients are registered with the medical centre?
 - What is the age distribution of the patient population?
 - How frequently do patients return for appointments?
